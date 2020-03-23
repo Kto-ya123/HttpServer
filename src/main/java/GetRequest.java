@@ -1,35 +1,27 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.FileNotFoundException;
 
 public class GetRequest {
-    static String returnPage(String request) throws Throwable{
+    static String returnPage(String request) throws Throwable {
         String path = "C:/Users/Artur/eclipse-workspace/HttpServer/src/pages/";
         String requstSplit[] = request.split(" ");
+        HttpCodes answer = HttpCodes.OK;
+        String contentFile = new String();
         String filename = requstSplit[1].substring(1);
-        System.err.println(filename);
-        String answer = "404";
-        File file = new File(path + filename);
-        FileReader fileReader = new FileReader(path + filename);
-        if (file.exists()){
-            answer = "200";
+
+        try{
+            FileReaderService fileReaderService = new FileReaderService(path + filename);
+            contentFile = fileReaderService.getContentFile();
+        }catch(FileNotFoundException exception){
+            answer = HttpCodes.NOT_FOUND;
         }
-        String response = "HTTP/1.1 "+ answer +" OK\r\n" +
+
+        String response = "HTTP/1.1 " + answer + " OK\r\n" +
                 "Server: YarServer/2009-09-09\r\n" +
                 "Content-Type: text/html\r\n" +
-                "Content-Length: " + 1024 + "\r\n" +
-                "Connection: close\r\n\r\n";
-        String result = response;
-        if(answer.equals("200")) {
-            BufferedReader br = new BufferedReader(fileReader);
-            while (true) {
-                String s = br.readLine();
-                if (s == null || s.trim().length() == 0) {
-                    break;
-                }
-                result += s;
-            }
-        }
-        return result;
+                "Content-Length: " + contentFile.length() + "\r\n" +
+                "Connection: close\r\n\r\n" +
+                contentFile;
+
+        return response;
     }
 }

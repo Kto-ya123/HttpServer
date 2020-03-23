@@ -30,8 +30,11 @@ public class HttpServer {
 
         public void run() {
             try {
-                readInputHeaders();
-                writeResponse("");
+                String request = readInputHeaders();
+                String response = GetRequest.returnPage(request);
+                System.out.println(response);
+                os.write(response.getBytes());
+                os.flush();
             } catch (Throwable t) {
                 /*do nothing*/
             } finally {
@@ -51,18 +54,21 @@ public class HttpServer {
                     "Content-Length: " + s.length() + "\r\n" +
                     "Connection: close\r\n\r\n";
             String result = response + s;
+            System.out.println(result);
             os.write(result.getBytes());
             os.flush();
         }
 
-        private void readInputHeaders() throws Throwable {
+        private String readInputHeaders() throws Throwable {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String request;
             while(true) {
-                String s = br.readLine();
-                if(s == null || s.trim().length() == 0) {
+                request = br.readLine();
+                if(request != null || request.trim().length() != 0) {
                     break;
                 }
             }
+            return request;
         }
     }
 }
