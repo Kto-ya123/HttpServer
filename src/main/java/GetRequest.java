@@ -16,7 +16,7 @@ public class GetRequest {
         }
 
         String response = "HTTP/1.1 " + answer + " OK\r\n" +
-                "Server: YarServer/2009-09-09\r\n" +
+                "Server: YarServer/2010-09-09\r\n" +
                 "Content-Type: text/html\r\n" +
                 "Content-Length: " + contentFile.length() + "\r\n" +
                 "Connection: close\r\n\r\n" +
