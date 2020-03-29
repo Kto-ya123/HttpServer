@@ -31,9 +31,9 @@ public class HttpServer {
         public void run() {
             try {
                 String request = readInputHeaders();
-                String response = GetRequest.returnPage(request);
-                System.out.println(response);
-                os.write(response.getBytes());
+                //String response = GetRequest.returnPage(request);
+                //System.out.println(response);
+                os.write(GetRequest.returnPage(request));
                 os.flush();
             } catch (Throwable t) {
                 /*do nothing*/

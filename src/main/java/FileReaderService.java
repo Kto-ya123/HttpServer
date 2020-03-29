@@ -2,12 +2,13 @@ import java.io.*;
 
 public class FileReaderService {
     FileReader fileReader;
+    private static String path = "C:/Users/Artur/eclipse-workspace/HttpServer/src/pages/";
 
-    FileReaderService(String fullPath) throws FileNotFoundException {
-        fileReader = new FileReader(fullPath);
+    FileReaderService(String fileName) throws FileNotFoundException {
+        fileReader = new FileReader(path + fileName);
     }
 
-    public String getContentFile() throws IOException {
+    public byte [] getContentFile() throws IOException {
         String content = new String();
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             while (true) {
@@ -17,6 +18,6 @@ public class FileReaderService {
                 }
                 content += line + '\n';
             }
-        return content;
+        return content.getBytes();
     }
 }
