@@ -1,9 +1,8 @@
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HttpServer {
 
@@ -21,6 +20,7 @@ public class HttpServer {
         private Socket s;
         private InputStream is;
         private OutputStream os;
+        private BufferedOutputStream dataOut;
 
         private SocketProcessor(Socket s) throws Throwable {
             this.s = s;
@@ -30,11 +30,17 @@ public class HttpServer {
 
         public void run() {
             try {
-                String request = readInputHeaders();
-                //String response = GetRequest.returnPage(request);
-                //System.out.println(response);
-                os.write(GetRequest.returnPage(request));
-                os.flush();
+                List<String> request = readInputHeaders();
+                String requestSplit[] = request.get(0).split(" ");
+                if(requestSplit[0].equals("GET")) {
+                    System.out.println(request);
+                    ContentResponse response = new ContentResponse(Response.returnPage(request.get(0)));
+                    os.write(response.getResponse().getBytes());
+                    os.write(response.getContent());
+                    os.flush();
+                }else {
+
+                }
             } catch (Throwable t) {
                 /*do nothing*/
             } finally {
@@ -59,12 +65,13 @@ public class HttpServer {
             os.flush();
         }
 
-        private String readInputHeaders() throws Throwable {
+        private List<String> readInputHeaders() throws Throwable {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            String request;
+            List<String> request = new ArrayList<String>();
             while(true) {
-                request = br.readLine();
-                if(request != null || request.trim().length() != 0) {
+                String line = br.readLine();
+                request.add(line);
+                if(!br.ready()/*line != null || line.trim().length() != 0*/) {
                     break;
                 }
             }

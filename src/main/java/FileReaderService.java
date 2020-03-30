@@ -2,7 +2,7 @@ import java.io.*;
 
 public class FileReaderService {
     FileReader fileReader;
-    private static String path = "C:/Users/Artur/eclipse-workspace/HttpServer/src/pages/";
+    private static String path = "D:/ideaProjects/HttpServer/src/pages/";
 
     FileReaderService(String fileName) throws FileNotFoundException {
         fileReader = new FileReader(path + fileName);

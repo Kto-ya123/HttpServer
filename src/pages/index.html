@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Лаба первая</title>
+    <link rel="stylesheet" href="/mysite.css">
+    <script src="/script.js"></script>
 </head>
-<body>
+<body onload="start(document.forms[0])" onunload="cleartids()">
 <h1>Hello</h1>
+<div>
+    <a href="form.html">Форма</a>
+    <a href="icon.svg">SVG формат</a>
+</div>
+<img src="/image.jpg" width="960" height="600" alt="text">
 </body>
 </html>
