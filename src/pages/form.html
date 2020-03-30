@@ -5,7 +5,7 @@
     <title>Форма Post</title>
 </head>
 <body>
-<form action="/" method="post">
+<form action="/submit" method="post" enctype="multipart/form-data">
     <div>
         <div>
             <span>Данные:</span>
@@ -13,11 +13,11 @@
         <br>
         <div>
             <span>Имя</span>
-            <input type="text" name="name">
+            <input type="text" name="name" value="Artur">
         </div>
         <div>
             <span>Кол-во лет</span>
-            <input type="number" name="money">
+            <input type="number" name="age" value="20">
         </div>
     </div>
         <br>

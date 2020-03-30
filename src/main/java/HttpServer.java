@@ -7,7 +7,7 @@ import java.util.List;
 public class HttpServer {
 
     public static void main(String[] args) throws Throwable {
-        ServerSocket ss = new ServerSocket(8080);
+        ServerSocket ss = new ServerSocket(8000);
         while (true) {
             Socket s = ss.accept();
             System.err.println("Client accepted");
@@ -38,8 +38,26 @@ public class HttpServer {
                     os.write(response.getResponse().getBytes());
                     os.write(response.getContent());
                     os.flush();
-                }else {
-
+                }else if(requestSplit[0].equals("POST")) {
+                    String str = "<html><body>\r\n";
+                    boolean paramEx = false;
+                    Thread.sleep(1000 / 100);
+                    for (int i = 0; i < request.size(); i++) {
+                        if(i == 13 || request.get(i) == null || request.get(i).equals("")){
+                            continue;
+                        }
+                        if(paramEx){
+                            paramEx = false;
+                            str += request.get(i).substring(1, request.get(i).length() - 1) + "</span>";
+                        }
+                        if(request.get(i).substring(0, 19).equals("Content-Disposition")){
+                            paramEx = true;
+                            String parameter = request.get(i).substring(request.get(i).indexOf('"') + 1, request.get(i).length()-1);
+                            str += "<span>" + parameter + ": ";
+                        }
+                    }
+                    str += "</body></html>";
+                    writeResponse(str, HttpCodes.OK);
                 }
             } catch (Throwable t) {
                 /*do nothing*/
@@ -53,8 +71,8 @@ public class HttpServer {
             System.err.println("Client processing finished");
         }
 
-        private void writeResponse(String s) throws Throwable {
-            String response = "HTTP/1.1 200 OK\r\n" +
+        private void writeResponse(String s, HttpCodes httpCodes) throws Throwable {
+            String response = "HTTP/1.1 "+ httpCodes +" \r\n" +
                     "Server: YarServer/2009-09-09\r\n" +
                     "Content-Type: text/html\r\n" +
                     "Content-Length: " + s.length() + "\r\n" +
