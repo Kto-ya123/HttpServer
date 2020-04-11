@@ -3,11 +3,10 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 
 public class ImageReaderService {
-    private static String path = "C:\\Users\\Artur\\eclipse-workspace\\HttpServer\\src\\pages/";
     InputStream inputStream;
 
         ImageReaderService(String filename) throws FileNotFoundException {
-            inputStream = new FileInputStream(path + filename);
+            inputStream = new FileInputStream(Environment.getPathToPages() + filename);
         }
 
 

@@ -2,10 +2,9 @@ import java.io.*;
 
 public class FileReaderService {
     FileReader fileReader;
-    private static String path = "C:\\Users\\Artur\\eclipse-workspace\\HttpServer\\src\\pages/";
 
     FileReaderService(String fileName) throws FileNotFoundException {
-        fileReader = new FileReader(path + fileName);
+        fileReader = new FileReader(Environment.getPathToPages() + fileName);
     }
 
     public byte [] getContentFile() throws IOException {

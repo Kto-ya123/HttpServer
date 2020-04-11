@@ -1,0 +1,8 @@
+Сервер для запросов: localhost:8000
+Доступны три операции: GET, POST, OPTIONS;
+Доступные ресурсы GET запроса: index.html, form.html, icon.svg, image.jpg, mysite.css, script.js;
+На странице index.html отображены подключения css(Синий цвет), script.js(таймер в title);
+Для POST запроса доступны 3 адреса: first, second, third; (form-data) протестировано с помощью Postman;
+
+Для запуска лабораторной в классе Environment изменить в строке абсолютный путь к папке pages, на свой абсолютный путь;
+
