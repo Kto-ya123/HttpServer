@@ -15,8 +15,14 @@ public class ContentResponse {
         return response;
     }
 
-    public void setResponse(String response) {
-        this.response = response;
+    public void setResponse(HttpCodes answer) {
+        this.response = ("HTTP/1.1 " + answer.getCode() + " " + answer.getDescription() +"\r\n" +
+                "Server: HttpServer/2020-03-30\r\n" +
+                "Content-Type: " + this.getContentType() + "\r\n" +
+                "Content-Length: " + this.getContent().length + "\r\n" +
+                "Access-Control-Allow-Origin: localhost" +
+                "Access-Control-Allow-Methods: GET, POST, OPTIONS" +
+                "Connection: close\r\n\r\n");
     }
 
     public byte[] getContent() {
